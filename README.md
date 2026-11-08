@@ -1,1 +1,3 @@
+.gitignore
+
 # drive-vault-showroom
