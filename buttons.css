@@ -1,0 +1,94 @@
+/* Border draw: existing button markup and sizing stay intact. */
+button:not(.acid):not(.active) {
+  --primary: #F4FF2B;
+  --secondary: #0F191E;
+  --surface: #E2F1F2;
+  --bink: var(--primary);
+  --bsurf: var(--surface);
+  position: relative;
+  isolation: isolate;
+  overflow: visible;
+}
+
+button:not(.acid):not(.active)::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  box-sizing: border-box;
+  border: 2px solid var(--bink);
+  border-radius: inherit;
+  pointer-events: none;
+  clip-path: inset(0 100% 0 0);
+  transition: clip-path 0.45s ease;
+}
+
+@media (hover: hover) {
+  button:not(.acid):not(.active):not(:disabled):hover::after {
+    clip-path: inset(0 0 0 0);
+  }
+}
+
+button:not(.acid):not(.active):not(:disabled):is(:focus-visible, :active, [data-preview])::after {
+  clip-path: inset(0 0 0 0);
+}
+
+button:not(.acid):not(.active):focus-visible {
+  outline: 2px solid var(--bink);
+  outline-offset: 5px;
+}
+
+button:disabled { cursor: not-allowed; opacity: 0.5; }
+button:disabled::before, button:disabled::after {
+  animation: none !important;
+  transition: none !important;
+}
+
+/* Acid-yellow primary actions: a contained ink fill, with no corner spill. */
+.acid {
+  --primary: #F4FF2B;
+  --secondary: #0F191E;
+  --surface: #E2F1F2;
+  --bink: var(--secondary);
+  --bsurf: var(--surface);
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  border: 1px solid var(--bink);
+  background: var(--primary);
+  color: var(--bink);
+  transition: color 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.acid::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--bink);
+  transform: translateX(-100%);
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (hover: hover) {
+  .acid:not(:disabled):hover::before { transform: translateX(0); }
+  .acid:not(:disabled):hover { color: var(--bsurf); }
+}
+
+.acid:not(:disabled):is(:focus-visible, :active, [data-preview])::before { transform: translateX(0); }
+.acid:not(:disabled):is(:focus-visible, :active, [data-preview]) { color: var(--bsurf); }
+
+.acid:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 5px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  button, button *, button::before, button::after,
+  button *::before, button *::after {
+    animation: none !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+}
