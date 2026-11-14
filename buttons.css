@@ -1,5 +1,5 @@
 /* Border draw: existing button markup and sizing stay intact. */
-button:not(.acid):not(.active) {
+button:not(.acid):not(.active):not(.menu-toggle):not(.intersection-button) {
   --primary: #F4FF2B;
   --secondary: #0F191E;
   --surface: #E2F1F2;
@@ -10,7 +10,7 @@ button:not(.acid):not(.active) {
   overflow: visible;
 }
 
-button:not(.acid):not(.active)::after {
+button:not(.acid):not(.active):not(.menu-toggle):not(.intersection-button)::after {
   content: "";
   position: absolute;
   inset: 0;
@@ -23,16 +23,16 @@ button:not(.acid):not(.active)::after {
 }
 
 @media (hover: hover) {
-  button:not(.acid):not(.active):not(:disabled):hover::after {
+  button:not(.acid):not(.active):not(.menu-toggle):not(.intersection-button):not(:disabled):hover::after {
     clip-path: inset(0 0 0 0);
   }
 }
 
-button:not(.acid):not(.active):not(:disabled):is(:focus-visible, :active, [data-preview])::after {
+button:not(.acid):not(.active):not(.menu-toggle):not(.intersection-button):not(:disabled):is(:focus-visible, :active, [data-preview])::after {
   clip-path: inset(0 0 0 0);
 }
 
-button:not(.acid):not(.active):focus-visible {
+button:not(.acid):not(.active):not(.menu-toggle):not(.intersection-button):focus-visible {
   outline: 2px solid var(--bink);
   outline-offset: 5px;
 }
@@ -81,6 +81,87 @@ button:disabled::before, button:disabled::after {
 .acid:focus-visible {
   outline: 2px solid var(--primary);
   outline-offset: 5px;
+}
+
+/* AMV action variant: opposing brackets intersect into a complete outline. */
+button.intersection-button {
+  --intersection-line: var(--acid);
+  position: relative;
+  isolation: isolate;
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  padding: 12px 18px;
+  background: transparent;
+  color: var(--intersection-line);
+  font: 500 10px var(--interface);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  transition: color 220ms ease;
+}
+
+button.intersection-button::before,
+button.intersection-button::after {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  box-sizing: border-box;
+  content: "";
+  border: 1px solid var(--intersection-line);
+  pointer-events: none;
+  transition: width 280ms cubic-bezier(0.16, 1, 0.3, 1), height 280ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+button.intersection-button::before {
+  top: 0;
+  left: 0;
+  border-right: 0;
+  border-bottom: 0;
+}
+
+button.intersection-button::after {
+  right: 0;
+  bottom: 0;
+  border-top: 0;
+  border-left: 0;
+}
+
+@media (hover: hover) {
+  button.intersection-button:not(:disabled):hover::before,
+  button.intersection-button:not(:disabled):hover::after {
+    width: 100%;
+    height: 100%;
+  }
+}
+
+button.intersection-button:not(:disabled):is(:focus-visible, :active)::before,
+button.intersection-button:not(:disabled):is(:focus-visible, :active)::after {
+  width: 100%;
+  height: 100%;
+}
+
+button.intersection-button:focus-visible {
+  outline: 2px solid var(--intersection-line);
+  outline-offset: 5px;
+}
+
+.exhibit-actions button.intersection-button + button.intersection-button {
+  border-left: 0;
+  padding-left: 18px;
+}
+
+.telemetri-form button.intersection-button,
+.allocation-form button.intersection-button {
+  width: 100%;
+  min-height: 38px;
+  margin-top: 38px;
+}
+
+@media (min-width: 761px) {
+  .telemetri-form button.intersection-button,
+  .allocation-form button.intersection-button {
+    min-height: 52px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

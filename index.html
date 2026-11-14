@@ -1,10 +1,209 @@
-<!doctype html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="theme-color" content="#050505"><title>DRIVE / VAULT</title><link rel="stylesheet" href="styles.css"></head><body>
-<header class="site-header"><a class="wordmark" href="#top">DRIVE <b>/ VAULT</b></a><button class="menu-toggle" aria-expanded="false" aria-controls="main-nav">Menu +</button><nav id="main-nav"><a href="#showroom">Showroom</a><a href="#showroom">Rental fleet</a><a href="#finance">Finance &amp; lease</a><a href="#trade">Trade-in</a><a href="#telemetry">Dealership concierge</a></nav><div class="header-actions"><a class="vip" href="tel:+12125550198">● VIP DESK: +1 212 555 0198</a><button class="acid" data-scroll="showroom">Check availability</button></div></header>
-<main id="top"><section class="hero"><div><p class="eyebrow">Authorized performance atelier</p><h1>Purchase outright.<br><em>Or command the cockpit<br>for 72 hours.</em></h1><p class="lead">DRIVE / VAULT operates a dual acquisition atelier: bespoke titled supercar purchases with guaranteed residual buybacks, paired alongside a private ultra-high performance rental stable for vetted track sessions and cross-country expeditions.</p><div class="mode" role="group" aria-label="Engagement mode"><button class="active" data-mode="buy">Buy / lease asset</button><button data-mode="rent">Reserve for rental / track days</button></div><small id="mode-copy">↪ Dynamic inventory pricing active</small></div><aside class="telemetry-card"><header><span>Showroom concierge</span><b>● Live telemetry</b></header><dl><div><dt>Total secured fleet</dt><dd>14 Allocations</dd></div><div><dt>Rental track availability</dt><dd>4 Slots this week</dd></div><div><dt>Lease financing APR from</dt><dd>4.89% APR Tier 1</dd></div><div><dt>Enclave climate status</dt><dd>Nitrogen 18°C sealed</dd></div></dl><button class="secondary" data-scroll="finance">Open lease &amp; loan calculator ↘</button></aside></section>
-<section class="flagship"><img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=1600&q=85" alt="Black Porsche on an open road"><span class="vin">VIN #WP0ZZZ99ZVS10984</span><span class="tag">Immediate delivery</span><div class="flagship-copy"><p>01 // Porsche spec</p><h2>GT-6 Black Edition</h2><small>2026 Model Year · Pure Electric High-Velocity Architecture</small><p class="description">Engineered for sustained autobahn sweeps and immediate torque vectoring. Equipped with dual-chamber air suspension, rear-axle steering, and carbon ceramic stopping hardware.</p><div class="stats"><span>0–100 km/h<b>2.4 sec</b></span><span>Powertrain<b>Tri-Motor EV</b></span><span>Range<b>720 km</b></span></div><div class="vehicle-price"><span>Acquisition price<b>$215,000</b></span><span>Estimated lease:<b>$2,190 / mo</b></span></div><div class="buttons"><button class="acid" data-action="Book test drive">Book test drive</button><button class="secondary" data-action="Rent this vehicle">Rent this vehicle</button></div><div class="sub-buttons"><button data-scroll="finance">Calc financing</button><button data-action="Window sticker">Window sticker</button><button data-scroll="trade">Trade-in value</button></div></div></section>
-<section id="showroom" class="showroom"><div class="filters"><div class="mode"><button class="active" data-mode="buy">Buy / lease asset</button><button data-mode="rent">Reserve for rental / track days</button></div><input id="search" type="search" placeholder="Search marque, spec, or VIN…" aria-label="Search fleet"><button id="reset" class="plain">Reset filters</button><div class="selects"><label>Make<select id="make"><option value="all">All Makes</option><option>Porsche</option><option>Marinello</option><option>Stratos</option><option>Obsidian</option></select></label><label>Body type<select id="body"><option value="all">All Body Types</option><option>Coupe</option><option>Sedan</option><option>Roadster</option></select></label><label>Powertrain<select id="fuel"><option value="all">All Powertrains</option><option>Electric</option><option>V8</option><option>Flat-6</option></select></label><label>Year<select id="year"><option value="all">2024 – 2026</option><option>2025</option><option>2026</option></select></label><label>Status<select id="status"><option value="all">All Allocations</option><option>Available</option><option>Track ready</option></select></label><label>Max budget <output id="budget-value">$380,000</output><input id="budget" type="range" min="100000" max="380000" step="5000" value="380000"></label></div></div><div class="showroom-head"><p class="eyebrow">Catalogued // verified fleet</p><h2>Performance Showroom &amp; Track Rental Grid</h2></div><p id="results-message" aria-live="polite" class="sr-only"></p><div id="vehicle-list" class="vehicle-list"></div></section>
-<section id="finance" class="finance split"><div><p class="eyebrow">Capital services // vault financial</p><h2>Calculate Financing &amp;<br>Monthly Lease Terms.</h2><p>Transparent deal structures without dealer markup. Model your lease or traditional finance agreement across 24 to 60-month terms.</p><ul><li>Zero early pre-payment penalties on all high-yield contracts</li><li>Corporate tax deductions &amp; LLC titling support</li><li>Complimentary nitrogen storage between track seasons</li></ul></div><form id="finance-form" class="calculator"><header>Selected vehicle: <b>Porsche GT-6 Black Edition</b><span>Tier 1 preferred</span></header><div class="two"><label>Vehicle capital cost ($)<input id="capital" type="number" value="215000" min="50000"></label><label>Down payment ($)<input id="down" type="number" value="43000" min="0"></label></div><div class="calculator-controls"><fieldset><legend>Term duration</legend><div class="term"><button type="button" class="active" data-term="24">24 mo</button><button type="button" data-term="36">36 mo</button><button type="button" data-term="48">48 mo</button><button type="button" data-term="60">60 mo</button></div></fieldset><label>Interest rate (APR)<output id="apr-value">3.6%</output><input id="apr" type="range" min="2" max="9" value="3.6" step=".1"></label></div><div class="payment"><span>Estimated monthly payment<strong id="payment-value">$2,362</strong><small>/ month + tax</small></span><button class="acid">Lock in rate &amp; pre-approve →</button></div></form></section>
-<section id="trade" class="trade panel"><div><p class="eyebrow">Exchange desk // certified equity</p><h2>Instant Supercar Trade-In &amp; Equity Assessment</h2><p>Transition seamlessly into your next allocation. We provide verified exchange offers, pay out equity, or clear lease balances in under five minutes.</p></div><form id="trade-form"><div class="two"><input name="vin" required placeholder="VIN # WP0ZZZ…"><select name="year"><option>2023 Porsche 911</option><option>2024 McLaren 750S</option></select><input name="mileage" required type="number" placeholder="Mileage"><select name="condition"><option>Clean / no accidents</option><option>Minor cosmetic wear</option></select></div><button class="acid">Generate instant certified valuation →</button></form></section>
-<section id="telemetry" class="telemetry-section split"><div><p class="eyebrow">Cockpit interface &amp; verification</p><h2>Digital Monroney stickers and live cockpit diagnostics.</h2><p>Every vehicle in our showroom is paired with live on-board telemetry and full factory Monroney window disclosures. Review transmission temperatures, lap history, downforce settings, and verified ECU maintenance blocks before stepping into the driver seat.</p><button class="secondary" data-action="Inspect sample window sticker">Inspect sample window sticker →</button></div><article class="cockpit"><header>● Digital window cockpit telemetry <span>Server time: live</span></header><img src="https://images.unsplash.com/photo-1553440569-bcc63803a83d?auto=format&fit=crop&w=1200&q=85" alt="Performance car cockpit telemetry preview"><footer><span>G-force resistance<b>1.85 G Peak</b></span><span>Aero downforce<b>480 kg @ 240km/h</b></span><span>Factory Monroney<b>Verified 100%</b></span><span>Test drive status<b>Slots open</b></span></footer></article></section>
-<section class="sanctuary panel"><div><p class="eyebrow">Facility sanctuary</p><h2>Nitrogen Showroom Enclaves</h2><p>Vehicles awaiting customer delivery or high-performance track deployment are preserved in individual pressurized glass enclaves with humidity regulated at 45% to preserve race slicks and carbon finish integrity.</p></div><img src="https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?auto=format&fit=crop&w=1200&q=85" alt="Performance car in a dark showroom"></section></main>
-<div id="toast" role="status" aria-live="polite"></div><footer class="site-footer"><div><a class="wordmark" href="#top">DRIVE <b>/ VAULT</b></a><p>Performance dealership, certified leasing house, and track rental atelier. Physical showroom appointments and nationwide enclosed transport dispatch.</p><small>© 2026 DRIVE / VAULT PERFORMANCE ATELIER</small></div><div><b>Dealership desk</b><p>Vault Pavilion 01, Sector 7<br>Mon–Sat: 08:30 – 20:00<br>Sun: Private Rental Dispatch Only</p><em>VIP test drives: 24-hr advance reservation</em></div><div><b>Direct channels</b><p>SHOWROOM: +1 212 555 0198<br>RENTALS: COMMS@VAULT.SPEC<br>FINANCE DESK: EXT 04</p></div><div><b>Portal</b><p>Inventory<br>Lease calculator<br>Trade-in tool<br>Facility specs</p></div></footer><script type="module" src="app.js"></script></body></html>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#050505" />
+    <title>DRIVE / VAULT</title>
+    <link rel="preload" as="image" href="/vehicles/kja-hero.png" fetchpriority="high" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="brand-logo" href="#top" aria-label="AMV home"><img src="/vehicles/AMV.png" alt="AMV" width="1238" height="1271" /></a>
+      <button
+        class="menu-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="main-nav"
+        aria-label="Open navigation menu"
+      >
+        <span class="menu-toggle-lines" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="menu-toggle-close" aria-hidden="true"><span>CLOSE</span><i></i></span>
+      </button>
+      <nav id="main-nav" class="menu-overlay" aria-label="Primary" aria-hidden="true" inert>
+        <div class="menu-overlay-content">
+          <div class="menu-links">
+            <a href="#exhibit"><span>01</span><b>EXHIBIT</b></a>
+            <a href="#telemetri"><span>02</span><b>TELEMETRI</b></a>
+            <a href="#arkitektur"><span>03</span><b>ARKITEKTUR</b></a>
+            <a class="menu-allocation" href="#request-allocation"><span>04</span><b>PRIVATE PLACEMENT</b></a>
+          </div>
+          <a class="menu-vip" href="tel:+12125550198">VIP DESK: +1 212 555 0198</a>
+        </div>
+      </nav>
+    </header>
+    <main id="top">
+      <section class="hero">
+        <div>
+          <h1>
+            <span class="hero-title-line hero-title-line--primary">THE PURSUIT OF THE</span>
+            <span class="hero-title-line hero-title-line--exceptional">EXCEPTIONAL</span>
+            <span class="hero-title-line hero-title-line--secondary">PERFORMANCE WITHOUT</span>
+            <span class="hero-title-line hero-title-line--limit">LIMIT</span>
+          </h1>
+        </div>
+      </section>
+      <section class="overview" aria-labelledby="overview-heading">
+        <div class="overview-media">
+          <img src="/vehicles/overview-section.jpeg" alt="Silver performance car at a circuit" loading="lazy" />
+        </div>
+        <div class="editorial-copy overview-copy">
+          <h2 id="overview-heading">BUILT FOR THE OBSESSED.</h2>
+          <p>An exclusive digital garage for collectors drawn to precision, history, and raw engineering. Explore a considered selection of rare, high-performance machines and discover the stories, engineering, and character behind each one. No noise. Just cars built without compromise.</p>
+        </div>
+      </section>
+      <section class="introduction" aria-labelledby="introduction-heading">
+        <div class="editorial-copy introduction-copy">
+          <h2 id="introduction-heading">KOENIGSEGG: A NAME BUILT ON AMBITION</h2>
+          <p>Founded in Sweden in 1994 by Christian von Koenigsegg, the brand began with one ambitious vision: to create the ultimate sports car without compromise.</p>
+          <p>Driven by fearless innovation and extraordinary engineering, Koenigsegg carries that vision forward—pushing the boundaries of speed, performance, and possibility.</p>
+        </div>
+        <div class="introduction-media">
+          <img src="/vehicles/intro-section.jpg" alt="Koenigsegg badge on carbon fibre" loading="lazy" />
+        </div>
+      </section>
+      <section class="collection-story" aria-label="Koenigsegg collection introduction">
+        <div class="collection-story-pin" aria-hidden="true"></div>
+        <div class="collection-story-content">
+          <article class="story-stage">
+            <p class="story-label"> ORIGIN  </p>
+            <h2>BUILT ON AMBITION</h2>
+            <p class="story-body">One determined idea from Sweden in 1994: create the ultimate performance car without compromise.</p>
+          </article>
+          <article class="story-stage">
+            <p class="story-label"> FORMULATE  </p>
+            <h2>ENGINEERED WITHOUT LIMITS</h2>
+            <p class="story-body">Lightness, innovation, and relentless development shape every Koenigsegg chassis.</p>
+          </article>
+          <article class="story-stage">
+            <p class="story-label"> THE COLLECTION  </p>
+            <h2>FOUR DISTINCT EXPRESSIONS</h2>
+            <p class="story-body">Jesko Attack. Gemera. CC850. Regera.</p>
+            <p class="story-body story-body-secondary">Four machines. Four approaches to speed.</p>
+          </article>
+        </div>
+      </section>
+      <section id="exhibit" class="showroom exhibit">
+        <div class="showroom-head">
+          <p class="eyebrow">01 // CATALOGUED</p>
+          <h2>EXHIBIT</h2>
+        </div>
+        <section class="splide exhibit-carousel" aria-label="Vehicle exhibit">
+          <div class="splide__track">
+            <ul id="vehicle-list" class="splide__list"></ul>
+          </div>
+        </section>
+      </section>
+      <section id="telemetri" class="telemetri-intro-story">
+        <div class="telemetri-intro-backdrop" aria-hidden="true"></div>
+        <div class="telemetri-opening">
+          <div class="telemetri-opening-content">
+            <p class="story-label">02 // CONFIDENTIAL</p>
+            <h2>TELEMETRI</h2>
+            <p>Great collections are always moving forward.<br>Tell us about your current car to begin a private<br>conversation about what comes next.</p>
+          </div>
+        </div>
+        <div class="telemetri-form-stage" aria-label="Private collection enquiry form">
+          <form id="telemetri-form" class="telemetri-form">
+            <p>PRIVATE COLLECTION ENQUIRY <span>CONFIDENTIAL</span></p>
+            <div class="telemetri-fields">
+              <label>CURRENT VEHICLE<input name="current-vehicle" required placeholder="Make, model, and year" /></label>
+              <label>CHASSIS OF INTEREST<select name="chassis" required><option value="" selected disabled>Select: Jesko Attack / Gemera / CC850 / Regera</option><option>Jesko Attack</option><option>Gemera</option><option>CC850</option><option>Regera</option></select></label>
+              <label>MILEAGE<input name="mileage" required type="number" min="0" placeholder="Current odometer reading" /></label>
+              <label>OWNERSHIP CONTEXT<select name="ownership-context" required><option value="" selected disabled>Select: Current owner / Representing owner / Collector enquiry</option><option>Current owner</option><option>Representing owner</option><option>Collector enquiry</option></select></label>
+              <label>SERVICE HISTORY<select name="service-history" required><option value="" selected disabled>Select: Complete / Partial / To discuss</option><option>Complete</option><option>Partial</option><option>To discuss</option></select></label>
+              <label>EMAIL<input name="email" required type="email" autocomplete="email" placeholder="Your best email address" /></label>
+            </div>
+            <button class="intersection-button" type="submit">REQUEST PRIVATE REVIEW →</button>
+          </form>
+        </div>
+      </section>
+      <section id="arkitektur" class="arkitektur">
+        <div class="arkitektur-title"><p class="eyebrow">03 // METHOD</p><h2>ARKITEKTUR</h2></div>
+        <div class="arkitektur-copy"><p>Every allocation begins with a disciplined search for the right chassis, then moves through inspection, preparation, and a final placement review.</p></div>
+        <ol class="arkitektur-index">
+          <li><span>01 / SOURCE</span><p>We locate low-volume cars through established collector, marque, and specialist networks.</p></li>
+          <li><span>02 / INSPECT</span><p>Documentation, service evidence, specification, and material condition are assessed without compromise.</p></li>
+          <li><span>03 / PREPARE</span><p>Each vehicle is considered for its mechanical baseline, presentation, and long-term stewardship.</p></li>
+          <li><span>04 / ALLOCATE</span><p>We place the right machine with the right driver, collection, or performance programme.</p></li>
+        </ol>
+      </section>
+      <section id="request-allocation" class="allocation" aria-label="Request allocation">
+        <div class="allocation-backdrop" aria-hidden="true"></div>
+        <div class="allocation-inner">
+          <p class="eyebrow">04 // PRIVATE PLACEMENT</p>
+          <form id="request-allocation-form" class="allocation-form">
+            <div class="allocation-fields">
+              <label>VEHICLE<input name="vehicle" value="2025 V8 Centurion Grand Tourer" readonly aria-readonly="true" /></label>
+              <label>ENQUIRY TYPE<input name="enquiry-type" value="Request allocation" readonly aria-readonly="true" /></label>
+              <label>NAME<input name="name" required autocomplete="name" /></label>
+              <label>EMAIL<input name="email" type="email" required autocomplete="email" /></label>
+              <label>LOCATION<input name="location" required autocomplete="address-level2" /></label>
+              <label class="allocation-message">MESSAGE<textarea name="message" rows="4"></textarea></label>
+            </div>
+            <button class="intersection-button" type="submit">SUBMIT ALLOCATION REQUEST →</button>
+          </form>
+        </div>
+      </section>
+      <section class="sanctuary panel">
+        <div>
+          <p class="eyebrow">Facility sanctuary</p>
+          <h2>Nitrogen Showroom Enclaves</h2>
+          <p>
+            Vehicles awaiting customer delivery or high-performance track
+            deployment are preserved in individual pressurized glass enclaves
+            with humidity regulated at 45% to preserve race slicks and carbon
+            finish integrity.
+          </p>
+        </div>
+        <img
+          src="https://images.unsplash.com/photo-1544829099-b9a0c07fad1a?auto=format&fit=crop&w=1200&q=85"
+          alt="Performance car in a dark showroom"
+        />
+      </section>
+    </main>
+    <div id="toast" role="status" aria-live="polite"></div>
+    <div class="exhibit-drag-cursor-dot" aria-hidden="true"></div>
+    <div class="exhibit-drag-cursor-circle" aria-hidden="true">
+      <span class="exhibit-drag-cursor-label">DRAG</span>
+      <svg class="exhibit-drag-cursor-arrows" width="22" height="12" viewBox="0 0 22 12" fill="none" aria-hidden="true" focusable="false">
+        <polygon points="7,0 0,6 7,12" fill="currentColor" />
+        <polygon points="15,0 22,6 15,12" fill="currentColor" />
+      </svg>
+    </div>
+    <footer id="contact" class="site-footer">
+      <div>
+        <a class="wordmark" href="#top">APEX MONARCH <b>VAULT</b></a>
+        <p>
+          Performance dealership, certified leasing house, and track rental
+          atelier. Physical showroom appointments and nationwide enclosed
+          transport dispatch.
+        </p>
+        <small>© 2026 DRIVE / VAULT PERFORMANCE ATELIER</small>
+      </div>
+      <div>
+        <b>Dealership desk</b>
+        <p>
+          Vault Pavilion 01, Sector 7<br />Mon–Sat: 08:30 – 20:00<br />Sun:
+          Private Rental Dispatch Only
+        </p>
+        <em>VIP test drives: 24-hr advance reservation</em>
+      </div>
+      <div>
+        <b>Direct channels</b>
+        <p>
+          SHOWROOM: +1 212 555 0198<br />RENTALS: COMMS@VAULT.SPEC<br />FINANCE
+          DESK: EXT 04
+        </p>
+      </div>
+      <div>
+        <b>Portal</b>
+        <p>
+          Inventory<br />Lease calculator<br />Trade-in tool<br />Facility specs
+        </p>
+      </div>
+    </footer>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>

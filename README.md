@@ -6,7 +6,6 @@ DRIVE / VAULT is a concept website for a high-performance vehicle showroom and p
 
 - A responsive showroom landing page built with Vite, HTML, CSS, and vanilla JavaScript.
 - Four vehicle listings with locally hosted imagery, performance data, prices, and lease estimates.
-- Search, make, body style, powertrain, year, status, and budget filters.
 - Vehicle-specific test-drive and rental request dialogs.
 - A financing calculator that updates when a vehicle is selected.
 - Digital window-sticker dialogs with the vehicle's key details.

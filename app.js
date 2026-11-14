@@ -1,5 +1,7 @@
 import "./dialog.css";
 import "./buttons.css";
+import Splide from "@splidejs/splide";
+import "@splidejs/splide/css";
 
 const cars = [
   { id: 1, make: "Porsche", body: "Sedan", fuel: "Electric", year: "2026", status: "Available", name: "Porsche GT-6 Black Edition", displayName: "GT-6 Black Edition", spec: "Obsidian satin · 4-door", price: 215000, lease: 2190, acceleration: "2.4 sec", powertrain: "Tri-Motor EV", range: "720 km", imageUrl: "/vehicles/gt-6-black-edition.png", imageAlt: "Black Porsche GT-6 driving along the coast at dusk", copy: "Engineered for sustained autobahn sweeps and immediate torque vectoring. Equipped with dual-chamber air suspension, rear-axle steering, and carbon ceramic stopping hardware." },
@@ -11,28 +13,37 @@ const cars = [
 const $ = (selector) => document.querySelector(selector);
 const $$ = (selector) => document.querySelectorAll(selector);
 const money = (value) => new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(value);
-let mode = "buy";
-let term = 24;
 
 function toast(text) { $("#toast").textContent = text; $("#toast").classList.add("show"); window.setTimeout(() => $("#toast").classList.remove("show"), 3000); }
 function carById(id) { return cars.find((car) => car.id === Number(id)); }
 
+let exhibitSplide;
+
+function mountExhibit(count) {
+  const carousel = $(".exhibit-carousel");
+  if (count < 2) return;
+  exhibitSplide = new Splide(carousel, {
+    type: "loop",
+    focus: "center",
+    perPage: 1,
+    padding: { left: "9vw", right: "9vw" },
+    gap: "1.25rem",
+    speed: 750,
+    easing: "cubic-bezier(0.22, 1, 0.36, 1)",
+    pagination: false,
+    arrows: false,
+    breakpoints: {
+      768: { padding: { left: "1rem", right: "1rem" }, gap: "0.75rem" },
+    },
+  }).mount();
+}
+
 function renderCars() {
-  const query = $("#search").value.toLowerCase();
-  const limit = Number($("#budget").value);
-  const filters = ["make", "body", "fuel", "year", "status"].reduce((values, id) => ({ ...values, [id]: $(`#${id}`).value }), {});
-  const list = cars.filter((car) => Object.entries(filters).every(([key, value]) => value === "all" || car[key] === value) && car.price <= limit && `${car.name} ${car.make} ${car.spec}`.toLowerCase().includes(query));
-  $("#results-message").textContent = `Showing ${list.length} vehicles`;
-  $("#vehicle-list").innerHTML = list.length ? list.map((car, index) => `<article class="vehicle ${index % 2 ? "reverse" : ""}"><div class="vehicle-image"><img src="${car.imageUrl}" alt="${car.imageAlt}" loading="lazy"><span>VIN # ${String(car.id).padStart(3, "0")}VAULT${car.year}</span><b>${car.status}</b></div><div class="vehicle-copy"><p>${String(car.id).padStart(2, "0")} // ${car.make} atelier <em>${car.spec}</em></p><h3>${car.displayName}</h3><small>${car.year} Model Year · ${car.fuel} high-performance architecture</small><p>${car.copy}</p><div class="stats"><span>0–100 km/h<b>${car.acceleration}</b></span><span>Powertrain<b>${car.powertrain}</b></span><span>Range<b>${car.range}</b></span></div><div class="vehicle-price"><span>Acquisition price<b>${money(car.price)}</b></span><span>Estimated lease:<b>${money(car.lease)} / mo</b></span></div><div class="buttons"><button class="acid" data-action="book" data-car-id="${car.id}">Book test drive</button><button class="secondary" data-action="rent" data-car-id="${car.id}">Rent this vehicle</button></div><div class="sub-buttons"><button data-action="finance" data-car-id="${car.id}">Calc financing</button><button data-action="sticker" data-car-id="${car.id}">Window sticker</button><button data-scroll="trade">Trade-in value</button></div></div></article>`).join("") : '<p class="empty">No vehicles match these filters. Reset filters to see the full fleet.</p>';
+  exhibitSplide?.destroy(true);
+  exhibitSplide = undefined;
+  $("#vehicle-list").innerHTML = cars.map((car) => `<li class="splide__slide"><article class="exhibit-vehicle"><img src="${car.imageUrl}" alt="${car.imageAlt}" loading="lazy"><div class="exhibit-overlay"><p>${car.year} ${car.displayName}</p><div><span>${car.status}</span></div><nav class="exhibit-actions" aria-label="${car.displayName} actions"><button class="intersection-button" data-action="rental" data-car-id="${car.id}">Inquire privately</button><button class="intersection-button" data-action="sticker" data-car-id="${car.id}">Vehicle file</button></nav></div></article></li>`).join("");
+  mountExhibit(cars.length);
 }
-
-function updatePayment() {
-  const capital = Math.max(0, Number($("#capital").value) || 0), down = Math.min(capital, Number($("#down").value) || 0), rate = Number($("#apr").value) / 100 / 12, balance = capital - down;
-  $("#payment-value").textContent = money(rate ? balance * (rate * Math.pow(1 + rate, term)) / (Math.pow(1 + rate, term) - 1) : balance / term);
-  $("#apr-value").textContent = `${$("#apr").value}%`;
-}
-
-function selectFinance(car) { $("#capital").value = car.price; $("#down").value = Math.round(car.price * 0.2); $("#finance-form header b").textContent = car.name; updatePayment(); $("#finance").scrollIntoView({ behavior: "smooth" }); }
 
 function createDialog() {
   const dialog = document.createElement("dialog");
@@ -41,15 +52,14 @@ function createDialog() {
   dialog.innerHTML = '<div class="dialog-panel"><button class="dialog-close" type="button" aria-label="Close dialog">×</button><div class="dialog-content"></div></div>';
   dialog.querySelector(".dialog-close").addEventListener("click", () => dialog.close());
   dialog.addEventListener("click", (event) => { if (event.target === dialog) dialog.close(); });
-  dialog.addEventListener("submit", (event) => { event.preventDefault(); const kind = event.target.dataset.requestKind; dialog.close(); toast(`${kind} request prepared for concierge review — no data was sent.`); });
+  dialog.addEventListener("submit", (event) => { event.preventDefault(); const kind = event.target.dataset.requestKind; dialog.close(); toast(`${kind} enquiry prepared for review — no data was sent.`); });
   document.body.append(dialog);
   return dialog;
 }
 
 const dialog = createDialog();
-function openRequest(car, kind) {
-  const rental = kind === "Rental";
-  dialog.querySelector(".dialog-content").innerHTML = `<p class="eyebrow">${rental ? "Track rental desk" : "Showroom concierge"}</p><h2 id="dialog-title">${rental ? "Request rental availability" : "Book a test drive"}</h2><p class="dialog-intro">${car.name} · ${car.spec}</p><form data-request-kind="${kind}"><label>Your name<input name="name" required autocomplete="name"></label><label>Email address<input name="email" type="email" required autocomplete="email"></label><label>${rental ? "Preferred rental start" : "Preferred appointment"}<input name="date" type="date" required></label><label>Notes <textarea name="notes" rows="3" placeholder="Preferred time or requirements"></textarea></label><button class="acid" type="submit">Prepare ${rental ? "rental" : "test-drive"} request →</button></form><p class="dialog-note">Demo only: submitting does not send or store your details.</p>`;
+function openRentalEnquiry(car) {
+  dialog.querySelector(".dialog-content").innerHTML = `<p class="eyebrow">Private rental desk</p><h2 id="dialog-title">Inquire privately</h2><p class="dialog-intro">Private rental enquiry for ${car.name} · ${car.spec}</p><form data-request-kind="Private rental"><label>Selected vehicle<input name="vehicle" value="${car.name}" readonly aria-readonly="true"></label><label>Rental start date<input name="rental-start" type="date" required></label><label>Rental end date<input name="rental-end" type="date" required></label><label>Location / destination<input name="location" required autocomplete="address-level2"></label><label>Name<input name="name" required autocomplete="name"></label><label>Email<input name="email" type="email" required autocomplete="email"></label><label>Message<textarea name="message" rows="3" placeholder="Travel plans, collection requirements, or preferences"></textarea></label><button class="acid" type="submit">Send private enquiry →</button></form><p class="dialog-note">Demo only: submitting does not send or store your details.</p>`;
   dialog.showModal();
 }
 function openSticker(car) {
@@ -57,16 +67,158 @@ function openSticker(car) {
   dialog.showModal();
 }
 
-$$("[data-mode]").forEach((button) => button.addEventListener("click", () => { mode = button.dataset.mode; $$('[data-mode]').forEach((item) => item.classList.toggle("active", item.dataset.mode === mode)); $("#mode-copy").textContent = mode === "buy" ? "↪ Dynamic inventory pricing active" : "↪ Private track-day availability active"; renderCars(); }));
-$$("[data-scroll]").forEach((button) => button.addEventListener("click", () => $(`#${button.dataset.scroll}`).scrollIntoView({ behavior: "smooth" })));
-["search", "make", "body", "fuel", "year", "status", "budget"].forEach((id) => $("#" + id).addEventListener(["make", "body", "fuel", "year", "status"].includes(id) ? "change" : "input", () => { if (id === "budget") $("#budget-value").textContent = money(Number($("#budget").value)); renderCars(); }));
-$("#reset").addEventListener("click", () => { ["make", "body", "fuel", "year", "status"].forEach((id) => $("#" + id).value = "all"); $("#search").value = ""; $("#budget").value = 380000; $("#budget-value").textContent = "$380,000"; renderCars(); });
-$$("[data-term]").forEach((button) => button.addEventListener("click", () => { term = Number(button.dataset.term); $$('[data-term]').forEach((item) => item.classList.toggle("active", item === button)); updatePayment(); }));
-["capital", "down", "apr"].forEach((id) => $("#" + id).addEventListener("input", updatePayment));
-$("#finance-form").addEventListener("submit", (event) => { event.preventDefault(); toast("Rate request prepared for concierge review — no data was sent."); });
-$("#trade-form").addEventListener("submit", (event) => { event.preventDefault(); toast("Certified valuation request prepared for review — no data was sent."); });
-$(".menu-toggle").addEventListener("click", (event) => { const open = event.currentTarget.getAttribute("aria-expanded") === "true"; event.currentTarget.setAttribute("aria-expanded", String(!open)); $("#main-nav").classList.toggle("open", !open); });
-document.addEventListener("click", (event) => { const action = event.target.closest("[data-action]"); if (!action) return; const car = carById(action.dataset.carId); if (!car) { toast(`${action.dataset.action} selected — concierge request prepared.`); return; } if (action.dataset.action === "book") openRequest(car, "Test-drive"); if (action.dataset.action === "rent") openRequest(car, "Rental"); if (action.dataset.action === "finance") selectFinance(car); if (action.dataset.action === "sticker") openSticker(car); });
+document.addEventListener("click", (event) => {
+  const trigger = event.target.closest("[data-scroll]");
+  if (!trigger) return;
+  $(`#${trigger.dataset.scroll}`)?.scrollIntoView({ behavior: "smooth" });
+});
+$("#telemetri-form").addEventListener("submit", (event) => { event.preventDefault(); toast("Private collection enquiry prepared for review — no data was sent."); });
+$("#request-allocation-form").addEventListener("submit", (event) => { event.preventDefault(); toast("Allocation request prepared for review — no data was sent."); });
+const menuButton = $(".menu-toggle");
+const mainNav = $("#main-nav");
+const menuLinks = $$("#main-nav a");
+
+function setMenu(open) {
+  menuButton.setAttribute("aria-expanded", String(open));
+  menuButton.setAttribute("aria-label", open ? "Close navigation menu" : "Open navigation menu");
+  mainNav.classList.toggle("is-open", open);
+  mainNav.setAttribute("aria-hidden", String(!open));
+  mainNav.inert = !open;
+  document.documentElement.classList.toggle("menu-open", open);
+  document.body.classList.toggle("menu-open", open);
+  if (open) {
+    window.setTimeout(() => menuLinks[0]?.focus(), 120);
+  } else {
+    menuButton.focus();
+  }
+}
+
+menuButton.addEventListener("click", () => setMenu(menuButton.getAttribute("aria-expanded") !== "true"));
+menuLinks.forEach((link) => link.addEventListener("click", (event) => {
+  const target = $(link.getAttribute("href"));
+  if (!target) return;
+  event.preventDefault();
+  setMenu(false);
+  target.scrollIntoView({ behavior: "smooth" });
+  window.history.replaceState(null, "", link.getAttribute("href"));
+}));
+document.addEventListener("keydown", (event) => {
+  if (menuButton.getAttribute("aria-expanded") !== "true") return;
+  if (event.key === "Escape") {
+    event.preventDefault();
+    setMenu(false);
+    return;
+  }
+  if (event.key !== "Tab") return;
+  const focusable = [menuButton, ...mainNav.querySelectorAll('a[href]')];
+  const first = focusable[0];
+  const last = focusable.at(-1);
+  if (event.shiftKey && document.activeElement === first) {
+    event.preventDefault();
+    last?.focus();
+  } else if (!event.shiftKey && document.activeElement === last) {
+    event.preventDefault();
+    first?.focus();
+  }
+});
+document.addEventListener("click", (event) => { const action = event.target.closest("[data-action]"); if (!action) return; const car = carById(action.dataset.carId); if (!car) return; if (action.dataset.action === "rental") openRentalEnquiry(car); if (action.dataset.action === "sticker") openSticker(car); });
+
+const exhibitDragSurface = document.querySelector("#exhibit .splide__track");
+const exhibitCursorDot = document.querySelector(".exhibit-drag-cursor-dot");
+const exhibitCursorCircle = document.querySelector(".exhibit-drag-cursor-circle");
+const exhibitCursorQuery = window.matchMedia("(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)");
+
+if (exhibitDragSurface && exhibitCursorDot && exhibitCursorCircle && exhibitCursorQuery.matches) {
+  let pointerX = 0;
+  let pointerY = 0;
+  let circleX = 0;
+  let circleY = 0;
+  let cursorVisible = false;
+  let cursorFrame;
+
+  const updateDot = () => {
+    exhibitCursorDot.style.transform = `translate3d(${pointerX}px, ${pointerY}px, 0) translate(-50%, -50%)`;
+  };
+  const updateCircle = () => {
+    exhibitCursorCircle.style.transform = `translate3d(${circleX}px, ${circleY}px, 0) translate(-50%, -50%)`;
+  };
+  const followPointer = () => {
+    circleX += (pointerX - circleX) * 0.18;
+    circleY += (pointerY - circleY) * 0.18;
+    updateCircle();
+    if (Math.abs(pointerX - circleX) > 0.2 || Math.abs(pointerY - circleY) > 0.2) {
+      cursorFrame = window.requestAnimationFrame(followPointer);
+    } else {
+      cursorFrame = undefined;
+    }
+  };
+  const scheduleFollow = () => {
+    if (!cursorFrame) cursorFrame = window.requestAnimationFrame(followPointer);
+  };
+  const isDragTarget = (target) => target instanceof Element && exhibitDragSurface.contains(target) && !target.closest("button");
+  const setCursorVisible = (visible) => {
+    cursorVisible = visible;
+    exhibitCursorDot.classList.toggle("is-visible", visible);
+    exhibitCursorCircle.classList.toggle("is-visible", visible);
+    if (!visible) exhibitCursorCircle.classList.remove("is-dragging");
+  };
+  const positionCursor = (event, immediate = false) => {
+    pointerX = event.clientX;
+    pointerY = event.clientY;
+    updateDot();
+    if (immediate) {
+      circleX = pointerX;
+      circleY = pointerY;
+      updateCircle();
+    } else {
+      scheduleFollow();
+    }
+  };
+
+  exhibitDragSurface.addEventListener("pointerenter", (event) => {
+    if (event.pointerType !== "mouse" || !isDragTarget(event.target)) return;
+    positionCursor(event, true);
+    setCursorVisible(true);
+  });
+  exhibitDragSurface.addEventListener("pointermove", (event) => {
+    if (event.pointerType !== "mouse") return;
+    positionCursor(event, !cursorVisible);
+    setCursorVisible(isDragTarget(event.target));
+  });
+  exhibitDragSurface.addEventListener("pointerleave", () => setCursorVisible(false));
+  exhibitDragSurface.addEventListener("pointerdown", (event) => {
+    if (event.pointerType === "mouse" && cursorVisible && isDragTarget(event.target)) {
+      exhibitCursorCircle.classList.add("is-dragging");
+    }
+  });
+  window.addEventListener("pointerup", () => exhibitCursorCircle.classList.remove("is-dragging"));
+  window.addEventListener("pointercancel", () => exhibitCursorCircle.classList.remove("is-dragging"));
+  window.addEventListener("scroll", () => {
+    if (!cursorVisible) return;
+    setCursorVisible(isDragTarget(document.elementFromPoint(pointerX, pointerY)));
+  }, { passive: true });
+}
+
+const hero = document.querySelector(".hero");
+const heroParallaxQuery = window.matchMedia("(hover: hover) and (pointer: fine) and (prefers-reduced-motion: no-preference)");
+if (hero && heroParallaxQuery.matches) {
+  let heroParallaxFrame;
+  const resetHeroParallax = () => {
+    window.cancelAnimationFrame(heroParallaxFrame);
+    hero.style.setProperty("--hero-parallax-x", "0px");
+    hero.style.setProperty("--hero-parallax-y", "0px");
+  };
+  hero.addEventListener("pointermove", (event) => {
+    const bounds = hero.getBoundingClientRect();
+    const offsetX = ((event.clientX - bounds.left) / bounds.width - 0.5) * 16;
+    const offsetY = ((event.clientY - bounds.top) / bounds.height - 0.5) * 16;
+    window.cancelAnimationFrame(heroParallaxFrame);
+    heroParallaxFrame = window.requestAnimationFrame(() => {
+      hero.style.setProperty("--hero-parallax-x", `${offsetX.toFixed(2)}px`);
+      hero.style.setProperty("--hero-parallax-y", `${offsetY.toFixed(2)}px`);
+    });
+  }, { passive: true });
+  hero.addEventListener("pointerleave", resetHeroParallax, { passive: true });
+}
 
 renderCars();
-updatePayment();
