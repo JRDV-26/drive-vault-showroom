@@ -4,16 +4,86 @@ import Splide from "@splidejs/splide";
 import "@splidejs/splide/css";
 
 const cars = [
-  { id: 1, make: "Porsche", body: "Sedan", fuel: "Electric", year: "2026", status: "Available", name: "Porsche GT-6 Black Edition", displayName: "GT-6 Black Edition", spec: "Obsidian satin · 4-door", price: 215000, lease: 2190, acceleration: "2.4 sec", powertrain: "Tri-Motor EV", range: "720 km", imageUrl: "/vehicles/gt-6-black-edition.png", imageAlt: "Black Porsche GT-6 driving along the coast at dusk", copy: "Engineered for sustained autobahn sweeps and immediate torque vectoring. Equipped with dual-chamber air suspension, rear-axle steering, and carbon ceramic stopping hardware." },
-  { id: 2, make: "Marinello", body: "Coupe", fuel: "V8", year: "2025", status: "Available", name: "V8 Centurion Grand Tourer", displayName: "V8 Centurion Grand Tourer", spec: "Argento Nürburgring · coupe", price: 189500, lease: 1920, acceleration: "3.8 sec", powertrain: "Manual V8", range: "610 km", imageUrl: "/vehicles/v8-centurion-grand-tourer.png", imageAlt: "Silver V8 Centurion Grand Tourer in a modern showroom", copy: "Pure auditory symphony. Naturally aspirated 6.5L power unit with rev limit capped at 8,900 RPM. Dry-sump lubrication and carbon-titanium anti-roll bars tuned for continental crossing." },
-  { id: 3, make: "Stratos", body: "Coupe", fuel: "Flat-6", year: "2025", status: "Track ready", name: "Hyperion Coupe 4.0", displayName: "Hyperion Coupe 4.0", spec: "Copper sunset · track coupe", price: 275000, lease: 2780, acceleration: "3.1 sec", powertrain: "4.0L Flat-6", range: "510 km", imageUrl: "/vehicles/hyperion-coupe-4-0.png", imageAlt: "Copper Hyperion Coupe parked beside the coast at sunset", copy: "Full carbon fiber bonnet with negative-pressure extraction ducts, 3-way adjustable Öhlins coilovers and factory high-downforce swan-neck wing producing 480 KG downforce at 240 KM/H." },
-  { id: 4, make: "Obsidian", body: "Roadster", fuel: "V8", year: "2025", status: "Available", name: "Obsidian Roadster GT-S", displayName: "Obsidian Roadster GT-S", spec: "Carbon KERS · roadster", price: 139900, lease: 1480, acceleration: "3.2 sec", powertrain: "Twin-Turbo V8", range: "540 km", imageUrl: "/vehicles/obsidian-roadster-kers.png", imageAlt: "Black Obsidian Roadster with yellow accents in a race workshop", copy: "Direct Formula-derived kinetic recovery and precision mechanical calibration. Review every chassis and specification detail before commitment." },
+  {
+    id: 1,
+    year: "2024",
+    status: "Model reference",
+    name: "Koenigsegg Jesko Attack",
+    displayName: "Koenigsegg Jesko Attack",
+    spec: "Track-focused megacar · two seats",
+    imageUrl: "/vehicles/jesko-attack-real.png",
+    imageAlt: "Koenigsegg Jesko Attack in a dark studio setting",
+    copy: "The Jesko Attack is the circuit-focused expression of the Jesko programme, pairing active aerodynamics with a carbon-fibre monocoque and a 9-speed Light Speed Transmission.",
+    specifications: [
+      ["Power output", "1,600 hp on E85"],
+      ["Engine", "5.0L twin-turbo V8"],
+      ["Transmission", "9-speed Light Speed Transmission"],
+      ["Maximum downforce", "1,400 kg"],
+      ["Curb weight", "1,420 kg"],
+      ["Production", "125 Jesko Attack and Absolut combined"],
+    ],
+  },
+  {
+    id: 2,
+    year: "2025",
+    status: "Model reference",
+    name: "Koenigsegg Gemera",
+    displayName: "Koenigsegg Gemera",
+    spec: "Four-seat hybrid megacar",
+    imageUrl: "/vehicles/gemera-real.png",
+    imageAlt: "Koenigsegg Gemera in a dark studio setting",
+    copy: "The Gemera recasts the megacar as a four-seat grand tourer, combining extreme hybrid performance with a carbon-fibre monocoque and a genuinely usable cabin.",
+    specifications: [
+      ["Power output", "2,300 hp combined"],
+      ["Powertrain", "Twin-turbo Hot V8 + Dark Matter e-motor"],
+      ["Transmission", "9-speed Light Speed Tourbillon Transmission"],
+      ["Drivetrain", "All-wheel drive with four-wheel torque vectoring"],
+      ["Seating", "Four individual seats"],
+      ["Production", "Limited to 300 cars"],
+    ],
+  },
+  {
+    id: 3,
+    year: "2022",
+    status: "Model reference",
+    name: "Koenigsegg CC850",
+    displayName: "Koenigsegg CC850",
+    spec: "Manual-engagement megacar · two seats",
+    imageUrl: "/vehicles/cc850-real.png",
+    imageAlt: "Koenigsegg CC850 in a dark studio setting",
+    copy: "The CC850 honours the original CC8S with a modern carbon-fibre platform and the Engage Shift System—an unusual transmission concept that combines manual involvement with automatic capability.",
+    specifications: [
+      ["Power output", "1,385 hp on E85"],
+      ["Engine", "5.0L twin-turbo V8"],
+      ["Transmission", "9-speed LST with Engage Shift System"],
+      ["Torque", "1,385 Nm at 4,800 rpm"],
+      ["Curb weight", "1,385 kg"],
+      ["Architecture", "Carbon-fibre monocoque"],
+    ],
+  },
+  {
+    id: 4,
+    year: "2022",
+    status: "Model reference",
+    name: "Koenigsegg Regera",
+    displayName: "Koenigsegg Regera",
+    spec: "Hybrid grand touring megacar · two seats",
+    imageUrl: "/vehicles/regera-real.png",
+    imageAlt: "Koenigsegg Regera in a dark studio setting",
+    copy: "The Regera pairs a twin-turbo V8 with electric drive and Koenigsegg Direct Drive, replacing a conventional multi-speed gearbox with a distinctive hybrid propulsion system.",
+    specifications: [
+      ["Combined output", "Over 1,500 hp on E85"],
+      ["Engine", "5.0L twin-turbo V8"],
+      ["Electric drive", "700 hp electric system"],
+      ["Transmission", "Koenigsegg Direct Drive"],
+      ["Maximum downforce", "450 kg at 250 km/h"],
+      ["Curb weight", "1,590 kg"],
+    ],
+  },
 ];
 
 const $ = (selector) => document.querySelector(selector);
 const $$ = (selector) => document.querySelectorAll(selector);
-const money = (value) => new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(value);
-
 function toast(text) { $("#toast").textContent = text; $("#toast").classList.add("show"); window.setTimeout(() => $("#toast").classList.remove("show"), 3000); }
 function carById(id) { return cars.find((car) => car.id === Number(id)); }
 
@@ -63,7 +133,8 @@ function openRentalEnquiry(car) {
   dialog.showModal();
 }
 function openSticker(car) {
-  dialog.querySelector(".dialog-content").innerHTML = `<p class="eyebrow">Digital Monroney // verified</p><h2 id="dialog-title">${car.name}</h2><p class="dialog-intro">${car.year} · ${car.spec} · VIN # ${String(car.id).padStart(3, "0")}VAULT${car.year}</p><img class="sticker-image" src="${car.imageUrl}" alt="${car.imageAlt}"><dl class="sticker-specs"><div><dt>Acquisition price</dt><dd>${money(car.price)}</dd></div><div><dt>Estimated lease</dt><dd>${money(car.lease)} / month</dd></div><div><dt>Acceleration</dt><dd>0–100 km/h in ${car.acceleration}</dd></div><div><dt>Powertrain</dt><dd>${car.powertrain}</dd></div><div><dt>Range</dt><dd>${car.range}</dd></div><div><dt>Allocation status</dt><dd>${car.status}</dd></div></dl>`;
+  const specifications = car.specifications.map(([label, value]) => `<div><dt>${label}</dt><dd>${value}</dd></div>`).join("");
+  dialog.querySelector(".dialog-content").innerHTML = `<p class="eyebrow">Vehicle file // model reference</p><h2 id="dialog-title">${car.name}</h2><p class="dialog-intro">${car.year} · ${car.spec}</p><img class="sticker-image" src="${car.imageUrl}" alt="${car.imageAlt}"><p class="dialog-intro">${car.copy}</p><dl class="sticker-specs">${specifications}</dl><p class="dialog-note">Reference specifications only. Final configuration and availability require confirmation.</p>`;
   dialog.showModal();
 }
 
